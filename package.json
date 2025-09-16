@@ -1,0 +1,16 @@
+{
+  "name": "nextjs-fiber",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "yarn workspace web dev",
+    "dev:api": "cd apps/api && air",
+    "dev": "yarn dev:web & yarn dev:api"
+  }
+}
