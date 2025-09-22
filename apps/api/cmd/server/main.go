@@ -7,7 +7,7 @@ import (
 	"github.com/pondws/api/routes"
 )
 
-const AllowOrigins = "http://localhost:3000, https://eiei.vercel.app"
+const AllowOrigins = "http://localhost:3000, https://oms-one-tau.vercel.app"
 
 func main() {
 	app := fiber.New()
