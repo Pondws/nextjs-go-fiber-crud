@@ -1,8 +1,8 @@
 "use client"
 
 import { memo, useEffect } from 'react'
-// import { z } from "zod"
-// import { zodResolver } from "@hookform/resolvers"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from '@tanstack/react-query'
 
@@ -19,10 +19,10 @@ const defaultValues = {
   content: ''
 }
 
-// const schema = z.object({
-//   title: z.string().nonempty('Title is required'),
-//   content: z.string().nonempty('Content is required'),
-// })
+const schema = z.object({
+  title: z.string().nonempty('Title is required'),
+  content: z.string().nonempty('Content is required'),
+})
 
 function PostFormComp(props: { id?: string }) {
   const { id } = props
@@ -35,9 +35,8 @@ function PostFormComp(props: { id?: string }) {
       errors
     },
     reset,
-  // } = useForm<z.infer<typeof schema>>({
-  } = useForm({
-    // resolver: zodResolver(schema),
+  } = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
     defaultValues
   })
 
