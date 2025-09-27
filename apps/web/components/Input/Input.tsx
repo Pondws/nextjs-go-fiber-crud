@@ -1,7 +1,7 @@
 import {
   InputBase,
   Label,
-} from "components"
+} from "components/ui"
 
 interface InputProps extends React.ComponentProps<typeof InputBase> {
   label?: string
@@ -21,10 +21,11 @@ export function Input(props: InputProps) {
 
   return (
     <div className="flex flex-col">
-      {label && <Label>{label}</Label>}
+      {label && <Label className="mb-2">{label}</Label>}
 
       <InputBase
         {...restProps}
+        className={error ? 'border-red-500' : ''}
       />
 
       {helperText && (
