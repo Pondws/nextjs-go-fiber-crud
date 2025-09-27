@@ -47,31 +47,31 @@ export const LAYOUT_OPTIONS = [
         url: "/post",
         icon: Inbox,
       },
-      {
-        id: "blog",
-        title: "Blog",
-        icon: Box,
-        items: [
-          {
-            id: "blog",
-            title: "Blog",
-            url: "/blog",
-            icon: Package,
-          },
-          {
-            id: "blog-tag",
-            title: "Blog Tag",
-            url: "/blog-tag",
-            icon: Tag,
-          },
-          // {
-          //   id: "product-category",
-          //   title: "Product Category",
-          //   url: "/product-category",
-          //   icon: Layers,
-          // },
-        ]
-      },
+      // {
+      //   id: "blog",
+      //   title: "Blog",
+      //   icon: Box,
+      //   items: [
+      //     {
+      //       id: "blog",
+      //       title: "Blog",
+      //       url: "/blog",
+      //       icon: Package,
+      //     },
+      //     {
+      //       id: "blog-tag",
+      //       title: "Blog Tag",
+      //       url: "/blog-tag",
+      //       icon: Tag,
+      //     },
+      //     // {
+      //     //   id: "product-category",
+      //     //   title: "Product Category",
+      //     //   url: "/product-category",
+      //     //   icon: Layers,
+      //     // },
+      //   ]
+      // },
     ]
   }
 ]
