@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from 'react'
 import {
   Sidebar as SidebarBase,
   SidebarContent,
@@ -11,6 +12,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
 } from "components/ui/sidebar"
 import {
@@ -29,6 +33,13 @@ import {
 } from "components/ui/dropdown-menu"
 
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "components/ui/collapsible"
+
+import {
+  ChevronRight,
   ChevronsUpDown,
   LogOut,
   Settings,
@@ -36,9 +47,19 @@ import {
 
 import { LAYOUT_OPTIONS } from "const"
 import Link from "next/link"
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 export function Sidebar() {
   const { isMobile } = useSidebar()
+  const segment = useSelectedLayoutSegment()
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({})
+
+  const toggleMenu = (menuId: string) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [menuId]: !prev[menuId]
+    }))
+  }
 
   return (
     <SidebarBase collapsible="icon">
@@ -63,18 +84,76 @@ export function Sidebar() {
               </SidebarGroupLabel>
             )}
             <SidebarGroupContent>
-              {item.menu.map((m) => (
-                <SidebarMenu key={m.id}>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild>
-                      <Link href={m.url}>
-                        <m.icon />
-                        <span>{m.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                </SidebarMenu>
-              ))}
+              <SidebarMenu>
+                {item.menus.map((menu) => {
+                  const isParentActive = menu.id === segment || menu.items?.some((m) => m.id === segment);
+                  const isOpen = openMenus[menu.id] ?? isParentActive
+
+                  return (
+                    <Collapsible
+                      key={menu.id}
+                      asChild
+                      className="group/collapsible"
+                      open={isOpen}
+                      onOpenChange={() => toggleMenu(menu.id)}
+                    >
+                      <SidebarMenuItem>
+                        <CollapsibleTrigger asChild>
+                          {menu.items?.length ? (
+                            <SidebarMenuButton
+                              tooltip={menu.title}
+                              isActive={isParentActive}
+                            >
+                              {menu.icon && <menu.icon strokeWidth={isParentActive ? 2.5 : 2} />}
+                              <span>{menu.title}</span>
+                              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                            </SidebarMenuButton>
+                          ) : (
+                            <SidebarMenuButton
+                              asChild
+                              tooltip={menu.title}
+                              isActive={isParentActive}
+                            >
+                              <Link href={menu.url || '/'}>
+                                {menu.icon && <menu.icon strokeWidth={isParentActive ? 2.5 : 2} />}
+                                <span>{menu.title}</span>
+                              </Link>
+                            </SidebarMenuButton>
+                          )}
+                        </CollapsibleTrigger>
+
+                        {menu.items?.length ? (
+                          <CollapsibleContent>
+                            {menu.items.map((item) => {
+                              const isActive = item.id === segment
+                              return (
+                                <SidebarMenuSub
+                                  key={item.id}
+                                  className={`relative ${isActive ? 'border-l border-primary' : ''
+                                    }`}
+                                >
+                                  <SidebarMenuSubItem>
+                                    <SidebarMenuSubButton
+                                      asChild
+                                      isActive={isActive}
+                                      className={isActive ? 'font-medium' : ''}
+                                    >
+                                      <Link href={item.url}>
+                                        <item.icon strokeWidth={isActive ? 2.5 : 2} />
+                                        <span>{item.title}</span>
+                                      </Link>
+                                    </SidebarMenuSubButton>
+                                  </SidebarMenuSubItem>
+                                </SidebarMenuSub>
+                              )
+                            })}
+                          </CollapsibleContent>
+                        ) : null}
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  )
+                })}
+              </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
         ))}
@@ -106,7 +185,7 @@ export function Sidebar() {
                 className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                 side={isMobile ? "bottom" : "right"}
                 align="end"
-                sideOffset={4}
+                sideOffset={!isMobile ? 16 : 4}
               >
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
