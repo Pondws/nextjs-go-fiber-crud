@@ -10,7 +10,7 @@ import {
   TableCell,
   Button,
   Skeleton,
-} from "components"
+} from "components/ui"
 import { PostType } from "types"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -51,7 +51,7 @@ function PostTableComp() {
 
   return (
     <div className="p-4 overflow-hidden">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         <h1>Post Table</h1>
         <Button
           onClick={() => router.push('post/create')}
@@ -60,9 +60,9 @@ function PostTableComp() {
         </Button>
       </div>
 
-      <div className="w-full h-screen">
+      <div className="w-full">
         {!isLoading ? (
-          <Table>
+          <Table className="border">
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">Title</TableHead>
@@ -94,7 +94,7 @@ function PostTableComp() {
             </TableBody>
           </Table>
         ) : (
-          <Skeleton className="w-full h-full" />
+          <Skeleton className="w-full" />
         )}
       </div>
     </div>

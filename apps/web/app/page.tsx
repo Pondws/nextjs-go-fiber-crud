@@ -7,8 +7,6 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push("/post")
+    router.push("/dashboard")
   }, [router])
-
-  return <>Welcome to ....</>
 }
