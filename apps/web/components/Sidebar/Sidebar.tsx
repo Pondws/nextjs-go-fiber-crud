@@ -45,7 +45,7 @@ import {
   Settings,
 } from 'lucide-react'
 
-import { LAYOUT_OPTIONS } from "const"
+import { LAYOUT_OPTIONS } from "@/consts"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from 'next/navigation'
 

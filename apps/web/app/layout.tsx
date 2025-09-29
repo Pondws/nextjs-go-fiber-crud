@@ -1,21 +1,12 @@
 "use client"
 
 // import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
-import "./globals.css";
+import { Noto_Sans } from "next/font/google"
+import "./globals.css"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {
-  SidebarProvider,
-  SidebarInset
-} from 'components/ui'
 
-import {
-  Sidebar
-} from "components"
-import { Header } from "components"
-
-const roboto = Roboto({
-  variable: "--font-roboto",
+const noto_sans  = Noto_Sans({
+  variable: "--font-noto-sans",
   subsets: ["latin"],
 })
 
@@ -28,17 +19,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${roboto.className}`}>
+      <body className={`${noto_sans.className}`}>
         <QueryClientProvider client={queryClient}>
-          <SidebarProvider>
-            <Sidebar />
-            <SidebarInset>
-              <Header />
-              {children}
-            </SidebarInset>
-          </SidebarProvider>
+          {children}
         </QueryClientProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -2,7 +2,8 @@ import { PostType } from "types"
 import axios from "axios"
 
 const api = axios.create({
-  baseURL: 'https://api-oms.onrender.com'
+  // baseURL: 'https://api-oms.onrender.com'
+  baseURL: 'http://localhost:8080'
 })
 
 const PREFIX_POST = '/post'
