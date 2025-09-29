@@ -3,23 +3,17 @@
 import { memo } from "react"
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  Button,
-  Skeleton,
-} from "components/ui"
-import { PostType } from "types"
+  Button
+} from "components"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { postApi } from "apis"
+import { POST } from "./post.const"
 
-import {
-  Pencil,
-  Trash2
-} from 'lucide-react'
+// const defaultVariants = {
+//   page: 0,
+//   limit: 10
+// }
 
 function PostTableComp() {
   const router = useRouter()
@@ -34,7 +28,7 @@ function PostTableComp() {
     data,
     isLoading
   } = useQuery({
-    queryKey: ['posts'],
+    queryKey: ['post'],
     queryFn: fetchData
   })
 
@@ -45,7 +39,7 @@ function PostTableComp() {
       return postApi.deleteByID(id)
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] })
+      queryClient.invalidateQueries({ queryKey: ["post"] })
     }
   })
 
@@ -60,43 +54,14 @@ function PostTableComp() {
         </Button>
       </div>
 
-      <div className="w-full">
-        {!isLoading ? (
-          <Table className="border">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Title</TableHead>
-                <TableHead className="text-right">Content</TableHead>
-                <TableHead className="w-[100px]">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data?.map((row: PostType.GetPost) => (
-                <TableRow key={row.id}>
-                  <TableCell className="font-medium">{row.title}</TableCell>
-                  <TableCell className="text-right">{row.content}</TableCell>
-                  <TableCell className="flex gap-2">
-                    <Button
-                      variant='outline'
-                      onClick={() => router.push(`/post/edit/${row.id}`)}
-                    >
-                      <Pencil />
-                    </Button>
-                    <Button
-                      variant='outline'
-                      onClick={() => mutate(row.id)}
-                    >
-                      <Trash2 />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        ) : (
-          <Skeleton className="w-full" />
-        )}
-      </div>
+      <Table
+        rows={data || []}
+        columns={POST.columns({
+          onEdit: (id: string) => router.push(`${POST.path('edit')}/${id}`),
+          onDelete: (id: string) => mutate(id),
+        })}
+        loading={isLoading}
+      />
     </div>
   )
 }

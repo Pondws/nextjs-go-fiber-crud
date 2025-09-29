@@ -11,8 +11,8 @@ type Post struct {
 	ID        string    `json:"id" gorm:"type:uuid;primaryKey"`
 	Title     string    `json:"title"`
 	Content   string    `json:"content" gorm:"type:text"`
-	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
-	UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
+	CreatedAt time.Time `json:"createdAt" gorm:"autoCreateTime"`
+	UpdatedAt time.Time `json:"updatedAt" gorm:"autoUpdateTime"`
 }
 
 func (p *Post) BeforeCreate(tx *gorm.DB) (err error) {
