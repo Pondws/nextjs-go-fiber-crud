@@ -4,7 +4,7 @@ import { memo, useEffect } from 'react'
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import {
   Input,
@@ -13,6 +13,9 @@ import {
 import { postApi } from 'apis'
 import { useRouter } from 'next/navigation'
 import { PostType } from 'types'
+
+import { toast } from 'sonner'
+import { handleError } from "utils"
 
 const defaultValues = {
   title: '',
@@ -27,6 +30,7 @@ const schema = z.object({
 function PostFormComp(props: { id?: string }) {
   const { id } = props
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const {
     register,
@@ -55,10 +59,6 @@ function PostFormComp(props: { id?: string }) {
     if (data) reset(data)
   }, [data, reset])
 
-  const onSubmit = (values: PostType.CreatePost) => {
-    submitPost.mutate(values)
-  }
-
   const submitPost = useMutation({
     mutationFn: async (value: PostType.CreatePost) => {
       if (id) {
@@ -68,17 +68,19 @@ function PostFormComp(props: { id?: string }) {
       }
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["post"] })
+      toast.success("บันทึกข้อมูลสำเร็จ")
       router.push('/post')
     },
     onError: (error) => {
-      console.error(error)
+      toast.error(handleError(error))
     }
   })
 
   return (
     <form
       className='flex flex-col gap-2 p-4'
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(values => submitPost.mutate(values))}
     >
       <Input
         {...register('title')}

@@ -26,7 +26,7 @@ function PostTableComp() {
 
   const {
     data,
-    isLoading
+    isFetching
   } = useQuery({
     queryKey: ['post'],
     queryFn: fetchData
@@ -35,12 +35,8 @@ function PostTableComp() {
   const {
     mutate,
   } = useMutation({
-    mutationFn: async (id: string) => {
-      return postApi.deleteByID(id)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post"] })
-    }
+    mutationFn: (id: string) => postApi.deleteByID(id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["post"] })
   })
 
   return (
@@ -48,7 +44,7 @@ function PostTableComp() {
       <div className="flex justify-between items-center mb-2">
         <h1>Post Table</h1>
         <Button
-          onClick={() => router.push('post/create')}
+          onClick={() => router.push(POST.path('create'))}
         >
           Add Post
         </Button>
@@ -57,10 +53,10 @@ function PostTableComp() {
       <Table
         rows={data || []}
         columns={POST.columns({
-          onEdit: (id: string) => router.push(`${POST.path('edit')}/${id}`),
-          onDelete: (id: string) => mutate(id),
+          onEdit: (id) => router.push(`${POST.path('edit')}/${id}`),
+          onDelete: (id) => mutate(id),
         })}
-        loading={isLoading}
+        loading={isFetching}
       />
     </div>
   )

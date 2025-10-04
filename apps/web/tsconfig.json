@@ -24,7 +24,8 @@
       "components": ["./components/index.ts"],
       "apis": ["./apis/index.ts"],
       "types": ["./types/index.ts"],
-      "const": ["./consts/index.ts"]
+      "consts": ["./consts/index.ts"],
+      "utils": ["./utils/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

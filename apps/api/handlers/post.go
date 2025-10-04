@@ -6,8 +6,6 @@ import (
 	"github.com/pondws/api/models"
 )
 
-var DB = database.DB
-
 func CreatePost(c *fiber.Ctx) error {
 	post := new(models.Post)
 

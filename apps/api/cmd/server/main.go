@@ -15,11 +15,13 @@ func main() {
 	database.ConnectDB()
 
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: AllowOrigins,
-		AllowMethods: "GET, POST, PUT, DELETE",
-		AllowHeaders: "Content-Type, Authorization",
+		AllowOrigins:     AllowOrigins,
+		AllowCredentials: true,
+		AllowMethods:     "GET, POST, PUT, DELETE",
+		AllowHeaders:     "Content-Type, Authorization",
 	}))
 
+	routes.AuthRoutes(app)
 	routes.PostRoutes(app)
 
 	app.Listen(":8080")

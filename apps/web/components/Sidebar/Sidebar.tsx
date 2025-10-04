@@ -48,9 +48,11 @@ import {
 import { LAYOUT_OPTIONS } from "consts"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from 'next/navigation'
+import { useAuth } from 'hooks'
 
 export function Sidebar() {
   const { isMobile } = useSidebar()
+  const { logout } = useAuth()
   const segment = useSelectedLayoutSegment()
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({})
 
@@ -209,7 +211,9 @@ export function Sidebar() {
                   </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => logout()}
+                >
                   <LogOut />
                   Log out
                 </DropdownMenuItem>
