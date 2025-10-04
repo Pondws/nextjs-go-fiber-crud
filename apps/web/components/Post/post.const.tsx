@@ -35,9 +35,20 @@ export const POST = {
     }) => [
       columnHelper.accessor("createdAt", {
         header: "Created At",
+        size: 1,
+        maxSize: 1,
         cell: info => {
           const { createdAt } = info.row.original
           return createdAt ? format(createdAt, 'dd/MM/yyyy') : '-'
+        }
+      }),
+      columnHelper.accessor("updatedAt", {
+        header: "Updated At",
+        size: 1,
+        maxSize: 1,
+        cell: info => {
+          const { updatedAt } = info.row.original
+          return updatedAt ? format(updatedAt, 'dd/MM/yyyy') : '-'
         }
       }),
       columnHelper.accessor("title", {
@@ -48,6 +59,8 @@ export const POST = {
       }),
       columnHelper.display({
         id: 'action',
+        size: 1,
+        maxSize: 1,
         cell: ({ row }) => (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -4,6 +4,7 @@ export namespace PostType {
     title: string
     content: string
     createdAt: string
+    updatedAt: string
   }
   export interface CreatePost {
     title: string
