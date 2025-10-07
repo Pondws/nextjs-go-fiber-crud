@@ -18,18 +18,18 @@ export const LAYOUT_OPTIONS = [
       },
       {
         id: "product",
-        title: "Product",
+        title: "สินค้า",
         icon: Box,
         items: [
           {
             id: "product",
-            title: "Product",
+            title: "สินค้า",
             url: "/product",
             icon: Package,
           },
           {
             id: "product-tag",
-            title: "Product Tag",
+            title: "แท็กสินค้า",
             url: "/product-tag",
             icon: Tag,
           },

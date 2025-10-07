@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,8 +9,6 @@ import (
 
 func JwtProtected(c *fiber.Ctx) error {
 	accessToken := c.Cookies("accessToken")
-
-	fmt.Println("accessToken", accessToken)
 
 	if accessToken == "" {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
@@ -24,16 +21,12 @@ func JwtProtected(c *fiber.Ctx) error {
 		return []byte(os.Getenv("JWT_ACCESS_SECRET")), nil
 	})
 
-	fmt.Println("token", token)
-
 	if err != nil || !token.Valid {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "Missing or invalid token",
 		})
 	}
 
-	fmt.Println("claims", c.Locals("userID", claims["userID"]))
 	c.Locals("userID", claims["userID"])
-	fmt.Println("mid user", c.Locals("userID", claims["userID"]))
 	return c.Next()
 }

@@ -10,4 +10,4 @@ export namespace PostType {
     title: string
     content: string
   }
-} 
+}

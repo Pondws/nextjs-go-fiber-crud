@@ -1,7 +1,5 @@
 import { PostTable } from "components"
 
-function PostTablePage() {
+export default function PostTablePage() {
   return <PostTable />
 }
-
-export default PostTablePage
