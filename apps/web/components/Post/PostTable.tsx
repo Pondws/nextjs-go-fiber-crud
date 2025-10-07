@@ -9,15 +9,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { postApi } from "apis"
 import { POST } from "./post.const"
-
-// const defaultVariants = {
-//   page: 0,
-//   limit: 10
-// }
+import { useTableHeight } from "hooks"
 
 function PostTableComp() {
   const router = useRouter()
   const queryClient = useQueryClient()
+  const height = useTableHeight()
 
   const fetchData = async () => {
     const res = await postApi.getAll()
@@ -40,7 +37,7 @@ function PostTableComp() {
   })
 
   return (
-    <div className="p-4 overflow-hidden">
+    <div>
       <div className="flex justify-between items-center mb-2">
         <h1>Post Table</h1>
         <Button
@@ -57,6 +54,7 @@ function PostTableComp() {
           onDelete: (id) => mutate(id),
         })}
         loading={isFetching}
+        height={height}
       />
     </div>
   )
