@@ -1,9 +1,12 @@
 import {
-  InputBase,
   Label,
 } from "components/ui"
 
-interface InputProps extends React.ComponentProps<typeof InputBase> {
+import {
+  Textarea as TextareaBase
+} from '../ui/textarea'
+
+interface TextareaProps extends React.ComponentProps<"textarea"> {
   label?: string
   description?: string
   isFlex?: boolean
@@ -11,7 +14,7 @@ interface InputProps extends React.ComponentProps<typeof InputBase> {
   error?: boolean
 }
 
-export function Input(props: InputProps) {
+export function Textarea(props: TextareaProps) {
   const {
     label,
     helperText,
@@ -20,12 +23,12 @@ export function Input(props: InputProps) {
   } = props
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col">
       {label && <Label className="mb-2">{label}</Label>}
 
-      <InputBase
+      <TextareaBase
         {...restProps}
-        className={`w-full ${error ? "border-red-500" : ""}`}
+        className={error ? 'border-red-500' : ''}
       />
 
       {helperText && (
