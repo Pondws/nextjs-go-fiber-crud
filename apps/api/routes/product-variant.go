@@ -11,6 +11,6 @@ func ProductVariantRoutes(app *fiber.App) {
 	productVariant.Post("/", handlers.CreateProductVariant)
 	productVariant.Get("/", handlers.GetProductVariant)
 	productVariant.Get("/:id", handlers.GetProductVariantByID)
-	productVariant.Put("/:id", handlers.UpdateProductVariant)
+	// productVariant.Put("/:id", handlers.UpdateProductVariant)
 	productVariant.Delete("/:id", handlers.DeleteProductVariant)
 }

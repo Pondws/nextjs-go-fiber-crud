@@ -63,54 +63,54 @@ func GetProductVariantByID(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateProductVariant(c *fiber.Ctx) error {
-	id := c.Params("id")
-	var payload models.ProductVariant
+// func UpdateProductVariant(c *fiber.Ctx) error {
+// 	id := c.Params("id")
+// 	var payload models.ProductVariant
 
-	var productVariant models.ProductVariant
-	var productVariantOption models.ProductVariantOption
+// 	var productVariant models.ProductVariant
+// 	var productVariantOption models.ProductVariantOption
 
-	if err := c.BodyParser(&payload); err != nil {
-		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
-	}
+// 	if err := c.BodyParser(&payload); err != nil {
+// 		return c.Status(400).JSON(fiber.Map{"error": err.Error()})
+// 	}
 
-	if err := database.DB.Preload("Options").First(&productVariant, "id = ?", id).Error; err != nil {
-		return c.Status(500).JSON("error", err.Error())
-	}
+// 	if err := database.DB.Preload("Options").First(&productVariant, "id = ?", id).Error; err != nil {
+// 		return c.Status(500).JSON("error", err.Error())
+// 	}
 
-	tx := database.DB.Begin()
+// 	tx := database.DB.Begin()
 
-	if err := tx.Model(&productVariant).Updates(models.ProductVariant{
-		Name:        payload.Name,
-		Description: payload.Description,
-		Status:      payload.Status,
-	}).Error; err != nil {
-		tx.Rollback()
-		return err
-	}
+// 	if err := tx.Model(&productVariant).Updates(models.ProductVariant{
+// 		Name:        payload.Name,
+// 		Description: payload.Description,
+// 		Status:      payload.Status,
+// 	}).Error; err != nil {
+// 		tx.Rollback()
+// 		return err
+// 	}
 
-	for _, opt := range payload.Options {
-		if err := tx.Model(&productVariantOption).
-			Where("id = ?", opt.ID).
-			Updates(models.ProductVariantOption{
-				Name:  opt.Name,
-				Order: opt.Order,
-			}).Error; err != nil {
-			tx.Rollback()
-			return err
-		}
-	}
+// 	for _, opt := range payload.Options {
+// 		if err := tx.Model(&productVariantOption).
+// 			Where("id = ?", opt.ID).
+// 			Updates(models.ProductVariantOption{
+// 				Name:  opt.Name,
+// 				Order: opt.Order,
+// 			}).Error; err != nil {
+// 			tx.Rollback()
+// 			return err
+// 		}
+// 	}
 
-	tx.Commit()
+// 	tx.Commit()
 
-	if err := database.DB.Preload("Options").First(&productVariant, "id = ?", id).Error; err != nil {
-		return c.Status(500).JSON("error", err.Error())
-	}
+// 	if err := database.DB.Preload("Options").First(&productVariant, "id = ?", id).Error; err != nil {
+// 		return c.Status(500).JSON("error", err.Error())
+// 	}
 
-	return c.Status(200).JSON(fiber.Map{
-		"data": productVariant,
-	})
-}
+// 	return c.Status(200).JSON(fiber.Map{
+// 		"data": productVariant,
+// 	})
+// }
 
 func DeleteProductVariant(c *fiber.Ctx) error {
 	id := c.Params("id")
