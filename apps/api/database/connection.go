@@ -40,6 +40,8 @@ func ConnectDB() {
 		&models.User{},
 		&models.Post{},
 		&models.ProductTag{},
+		&models.ProductVariant{},
+		&models.ProductVariantOption{},
 	)
 
 	DB = db
