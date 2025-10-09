@@ -24,6 +24,7 @@ func main() {
 	routes.AuthRoutes(app)
 	routes.PostRoutes(app)
 	routes.ProductTagRoutes(app)
+	routes.ProductVariantRoutes(app)
 
 	app.Listen(":8080")
 }
