@@ -3,7 +3,8 @@ import {
   Inbox,
   LayoutGrid,
   Package,
-  Tag
+  Tag,
+  Puzzle
 } from "lucide-react"
 
 export const LAYOUT_OPTIONS = [
@@ -26,6 +27,12 @@ export const LAYOUT_OPTIONS = [
             title: "สินค้า",
             url: "/product",
             icon: Package,
+          },
+              {
+            id: "product-variant",
+            title: "ตัวเลือกสินค้า",
+            url: "/product-variant",
+            icon: Puzzle,
           },
           {
             id: "product-tag",

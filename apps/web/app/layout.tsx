@@ -21,7 +21,6 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      {/* <body className={`${noto_sans.className} overflow-hidden`}> */}
       <body className={`${noto_sans.className}`}>
         <QueryClientProvider client={queryClient}>
           <Hydration>

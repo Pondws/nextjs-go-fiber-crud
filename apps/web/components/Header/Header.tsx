@@ -64,9 +64,11 @@ export function Header(props: HeaderProps) {
           {actionButton}
         </div>
       </div>
-      <div>
-        {filterBox}
-      </div>
+      {filterBox && (
+        <div>
+          {filterBox}
+        </div>
+      )}
     </header>
   )
 }
